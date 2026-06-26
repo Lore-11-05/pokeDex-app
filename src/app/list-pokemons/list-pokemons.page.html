@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pokedex</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let pokemon of pokemons" [routerLink]="['/detail-pokemon', pokemon.id]">
+      <ion-avatar slot="start">
+        <img [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.id + '.png'" [alt]="pokemon.name">
+      </ion-avatar>
+      <ion-label>
+        <h2>#{{ pokemon.id }} {{ pokemon.name | titlecase }}</h2>
+      </ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingText="Cargando más Pokémon..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando Pokémon...</p>
+  </div>
+</ion-content>
